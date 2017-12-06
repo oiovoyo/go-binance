@@ -68,6 +68,18 @@ func NewClient(apiKey, secretKey string) *Client {
 	}
 }
 
+func NewClientCustomHttp(apiKey, secretKey string, httpClient *http.Client) *Client {
+	return &Client{
+		APIKey:     apiKey,
+		SecretKey:  secretKey,
+		BaseURL:    "https://www.binance.com",
+		UserAgent:  "Binance/golang",
+		HTTPClient: httpClient,
+		Debug:false,
+		Logger:     log.New(os.Stderr, "Binance-golang ", log.LstdFlags),
+	}
+}
+
 type doFunc func(req *http.Request) (*http.Response, error)
 
 // Client define API client
@@ -173,6 +185,7 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 		e := json.Unmarshal(data, apiErr)
 		if e != nil {
 			c.debug("failed to unmarshal json: %s", err)
+			apiErr.Message = string(data)
 		}
 		return nil, apiErr
 	}
@@ -282,4 +295,9 @@ func (c *Client) NewKeepaliveUserStreamService() *KeepaliveUserStreamService {
 // NewCloseUserStreamService init closing user stream service
 func (c *Client) NewCloseUserStreamService() *CloseUserStreamService {
 	return &CloseUserStreamService{c: c}
+}
+
+// NewCloseUserStreamService init closing user stream service
+func (c *Client) NewListProductService() *ListProductService {
+	return &ListProductService{c: c}
 }
