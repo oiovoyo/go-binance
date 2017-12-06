@@ -8,11 +8,12 @@ import (
 
 // CreateWithdrawService create withdraw
 type CreateWithdrawService struct {
-    c       *Client
-    asset   string
-    address string
-    amount  string
-    name    *string
+    c          *Client
+    asset      string
+    address    string
+    amount     string
+    name       *string
+    addressTag *string
 }
 
 // Asset set asset
@@ -39,6 +40,10 @@ func (s *CreateWithdrawService) Name(name string) *CreateWithdrawService {
     return s
 }
 
+func (s *CreateWithdrawService) AddressTag(addressTag string) *CreateWithdrawService {
+    s.addressTag = &addressTag
+    return s
+}
 // Do send request
 func (s *CreateWithdrawService) Do(ctx context.Context) (err error) {
     r := &request{
@@ -53,6 +58,9 @@ func (s *CreateWithdrawService) Do(ctx context.Context) (err error) {
     }
     if s.name != nil {
         m["name"] = *s.name
+    }
+    if s.addressTag != nil {
+        m["addressTag"] = *s.addressTag
     }
     //r.SetFormParams(m)
     r.SetParams(m)
@@ -152,10 +160,11 @@ type WithdrawHistoryResponse struct {
 
 // Withdraw define withdraw info
 type Withdraw struct {
-    Amount    float64 `json:"amount"`
-    Address   string  `json:"address"`
-    Asset     string  `json:"asset"`
-    TxID      string  `json:"txId"`
-    ApplyTime int64   `json:"applyTime"`
-    Status    int     `json:"status"`
+    Amount     float64 `json:"amount"`
+    Address    string  `json:"address"`
+    Asset      string  `json:"asset"`
+    TxID       string  `json:"txId"`
+    ApplyTime  int64   `json:"applyTime"`
+    Status     int     `json:"status"`
+    AddressTag *string `json:"addressTag"`
 }
