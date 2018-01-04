@@ -90,3 +90,16 @@ func TestClient_NewListProductService(t *testing.T) {
 	t.Log(v, err)
 }
 
+func TestClient_NewNewAccoutStatusService(t *testing.T) {
+	 err := client.NewAccoutStatusService().
+		Do(context.Background())
+
+	t.Log( err)
+}
+
+func TestClient_NewDepositAddressService(t *testing.T) {
+	a, err := client.NewDepositAddressService().Asset("ARN").
+		Do(context.Background())
+
+	t.Log(a, err)
+}

@@ -3,6 +3,8 @@ package binance
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 )
 
 // ListDepositsService list deposits
@@ -84,4 +86,54 @@ type Deposit struct {
 	Amount     float64 `json:"amount"`
 	Asset      string  `json:"asset"`
 	Status     int     `json:"status"`
+}
+
+
+// ListDepositsService list deposits
+type DepositAddressService struct {
+	c         *Client
+	asset     *string
+}
+
+// Asset set asset
+func (s *DepositAddressService) Asset(asset string) *DepositAddressService {
+	s.asset = &asset
+	return s
+}
+
+// Do send request
+func (s *DepositAddressService) Do(ctx context.Context, opts ...RequestOption) (d *DepositAddress, err error) {
+	r := &request{
+		method:   "GET",
+		endpoint: "/wapi/v3/depositAddress.html",
+		secType:  secTypeSigned,
+	}
+	m := params{}
+	if s.asset != nil {
+		m["asset"] = *s.asset
+	} else {
+		return nil, errors.New("asset required")
+	}
+
+	r.SetParams(m)
+
+	data, err := s.c.callAPI(ctx, r, opts...)
+	if err != nil {
+		return
+	}
+	fmt.Printf("%s\n",string(data))
+	res := new(DepositAddress)
+	err = json.Unmarshal(data, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+type DepositAddress struct {
+	Address string `json:"address"`
+	AddressTag string `json:"addressTag"`
+	Asset string `json:"asset"`
+	Success bool `json:"success"`
+
 }

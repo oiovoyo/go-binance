@@ -301,3 +301,12 @@ func (c *Client) NewCloseUserStreamService() *CloseUserStreamService {
 func (c *Client) NewListProductService() *ListProductService {
 	return &ListProductService{c: c}
 }
+
+// NewCloseUserStreamService init closing user stream service
+func (c *Client) NewAccoutStatusService() *CreateAccoutStatusService {
+	return &CreateAccoutStatusService{c: c}
+}
+
+func (c *Client) NewDepositAddressService() *DepositAddressService {
+	return &DepositAddressService{c: c}
+}
