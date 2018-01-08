@@ -79,6 +79,7 @@ func (s *CreateWithdrawService) Do(ctx context.Context) (id string, err error) {
 
     if withdraw.Success == false {
         err = errors.New(withdraw.Msg)
+        return
     }
 
     return withdraw.Id, nil
