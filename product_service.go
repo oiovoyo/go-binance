@@ -64,7 +64,7 @@ type Product struct {
 	Symbol           string  `json:"symbol"`
 	TradedMoney      float64 `json:"tradedMoney"`
 	Active           bool    `json:"active"`
-	MinTrade         float64 `json:"minTrade,string"`
+	MinTrade         float64 `json:"minTrade"`
 	BaseAsset        string  `json:"baseAsset"`
 	ActiveSell       float64 `json:"activeSell"`
 	WithdrawFee      float64 `json:"withdrawFee,string"`
@@ -81,5 +81,5 @@ type Product struct {
 	QuoteAsset       string  `json:"quoteAsset"`
 	Open             float64 `json:"open,string"`
 	Status           string  `json:"status"`
-	MinQty           float64 `json:"minQty,string"`
+	MinQty           float64 `json:"minQty"`
 }
