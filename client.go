@@ -75,7 +75,7 @@ func NewClientCustomHttp(apiKey, secretKey string, httpClient *http.Client) *Cli
 		BaseURL:    "https://www.binance.com",
 		UserAgent:  "Binance/golang",
 		HTTPClient: httpClient,
-		Debug:false,
+		Debug:      false,
 		Logger:     log.New(os.Stderr, "Binance-golang ", log.LstdFlags),
 	}
 }
@@ -309,4 +309,9 @@ func (c *Client) NewAccoutStatusService() *CreateAccoutStatusService {
 
 func (c *Client) NewDepositAddressService() *DepositAddressService {
 	return &DepositAddressService{c: c}
+}
+
+// NewExchangeInfoService init exchange info service
+func (c *Client) NewExchangeInfoService() *ExchangeInfoService {
+	return &ExchangeInfoService{c: c}
 }
