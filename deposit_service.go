@@ -88,11 +88,10 @@ type Deposit struct {
 	Status     int     `json:"status"`
 }
 
-
 // ListDepositsService list deposits
 type DepositAddressService struct {
-	c         *Client
-	asset     *string
+	c     *Client
+	asset *string
 }
 
 // Asset set asset
@@ -121,7 +120,7 @@ func (s *DepositAddressService) Do(ctx context.Context, opts ...RequestOption) (
 	if err != nil {
 		return
 	}
-	fmt.Printf("%s\n",string(data))
+	//fmt.Printf("%s\n",string(data))
 	res := new(DepositAddress)
 	err = json.Unmarshal(data, res)
 	if err != nil {
@@ -131,9 +130,8 @@ func (s *DepositAddressService) Do(ctx context.Context, opts ...RequestOption) (
 }
 
 type DepositAddress struct {
-	Address string `json:"address"`
+	Address    string `json:"address"`
 	AddressTag string `json:"addressTag"`
-	Asset string `json:"asset"`
-	Success bool `json:"success"`
-
+	Asset      string `json:"asset"`
+	Success    bool   `json:"success"`
 }
