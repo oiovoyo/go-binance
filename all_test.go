@@ -26,7 +26,8 @@ var (
 		Transport: t,
 		Timeout:   15 * time.Second,
 	}
-	client = NewClientCustomHttp(apiKey, secretKey, c0)
+	_      = c0
+	client = NewClientCustomHttp(apiKey, secretKey, http.DefaultClient)
 )
 
 func TestClient_NewListDepositsService(t *testing.T) {
@@ -63,14 +64,14 @@ func TestClient_NewListOpenOrdersService(t *testing.T) {
 		return
 	}
 	for _, o := range v {
-		t.Log("%+v",o)
+		t.Logf("%+v", o)
 	}
 }
 
 func TestClient_NewCancelOrderService(t *testing.T) {
 	v, err := client.NewCancelOrderService().Symbol("BTCUSDT").
-	OrigClientOrderID("JwYO8kowMO8SAeZZQ07lvX").
-	Do(context.Background())
+		OrigClientOrderID("JwYO8kowMO8SAeZZQ07lvX").
+		Do(context.Background())
 
 	t.Log(v, err)
 }
@@ -82,7 +83,6 @@ func TestClient_NewGetAccountService(t *testing.T) {
 	t.Log(v, err)
 }
 
-
 func TestClient_NewListProductService(t *testing.T) {
 	v, err := client.NewListProductService().
 		Do(context.Background())
@@ -90,11 +90,18 @@ func TestClient_NewListProductService(t *testing.T) {
 	t.Log(v, err)
 }
 
-func TestClient_NewNewAccoutStatusService(t *testing.T) {
-	 err := client.NewAccoutStatusService().
+func TestClient_NewAssetDetailService(t *testing.T) {
+	v, err := client.NewAssetDetailService().
 		Do(context.Background())
 
-	t.Log( err)
+	t.Log(v, err)
+}
+
+func TestClient_NewNewAccoutStatusService(t *testing.T) {
+	err := client.NewAccoutStatusService().
+		Do(context.Background())
+
+	t.Log(err)
 }
 
 func TestClient_NewDepositAddressService(t *testing.T) {

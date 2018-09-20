@@ -315,3 +315,6 @@ func (c *Client) NewDepositAddressService() *DepositAddressService {
 func (c *Client) NewExchangeInfoService() *ExchangeInfoService {
 	return &ExchangeInfoService{c: c}
 }
+func (c *Client) NewAssetDetailService() *AssetDetailService {
+	return &AssetDetailService{c: c}
+}
